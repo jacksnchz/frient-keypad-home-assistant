@@ -77,7 +77,7 @@ blueprint:
       name: Action Emergency
       description:
         An action to be performed when the emergency / SOS button of the keypad
-        is pressed.
+        is pressed three times (default behaviour).
       default: []
       selector:
         action: {}
@@ -87,7 +87,7 @@ blueprint:
       description: "A custom PIN to trigger a custom action. Example: 0000"
     action_cust1:
       name: Action Custom 1
-      description: An action to be performed when custom PIN 1 ist entered.
+      description: An action to be performed when custom PIN 1 is entered.
       default: []
       selector:
         action: {}
@@ -97,7 +97,7 @@ blueprint:
       description: "A custom PIN to trigger a custom action. Example: 1111"
     action_cust2:
       name: Action Custom 2
-      description: An action to be performed when custom PIN 2 ist entered.
+      description: An action to be performed when custom PIN 2 is entered.
       default: []
       selector:
         action: {}
@@ -271,7 +271,7 @@ action:
                     value_template: '{{ trigger.payload_json.action == "emergency" }}'
                 sequence:
                   - choose:
-                    default: !input action_panic
+                    default: !input action_emergency
               - conditions:
                   - condition: template
                     value_template:
