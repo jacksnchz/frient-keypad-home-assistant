@@ -180,7 +180,7 @@ action:
           - service: mqtt.publish
             data:
               topic: !input z2m_keypad_path_set
-              payload: "{\n \"arm_mode\": \n  {\n   \"mode\": \"arm_night\"\n  }\n}"
+              payload: "{\n \"arm_mode\": \n  {\n   \"mode\": \"arm_night_zones\"\n  }\n}"
           - choose:
             default: !input action_armed_night
       - conditions:
