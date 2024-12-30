@@ -287,6 +287,17 @@ action:
                       entity_id: !input control_panel
                     data:
                       code: !input pin
+                            - conditions:
+              - condition: template
+                    value_template:
+                      '{{ trigger.payload_json.action_code == pin_var and trigger.payload_json.action
+                      == "arm_night_zones" }}'
+                sequence:
+                  - service: alarm_control_panel.alarm_arm_night
+                    target:
+                      entity_id: !input control_panel
+                    data:
+                      code: !input pin
               - conditions:
                   - condition: template
                     value_template:
