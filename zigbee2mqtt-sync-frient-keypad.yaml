@@ -49,6 +49,14 @@ blueprint:
       default: []
       selector:
         action: {}
+    action_armed_night:
+      name: Action Armed Night
+      description:
+        An action to be performed when the alarm panel changes to the armed
+        night state.
+      default: []
+      selector:
+        action: {}
     action_armed_away:
       name: Action Armed Away
       description:
@@ -117,6 +125,10 @@ trigger:
     id: panel_armed_home
   - platform: state
     entity_id: !input control_panel
+    to: armed_night
+    id: panel_armed_night
+  - platform: state
+    entity_id: !input control_panel
     to: disarmed
     id: panel_disarmed
   - platform: state
@@ -161,6 +173,16 @@ action:
             default: []
           - choose:
             default: !input action_arming
+      - conditions:
+          - condition: trigger
+            id: panel_armed_night
+        sequence:
+          - service: mqtt.publish
+            data:
+              topic: !input z2m_keypad_path_set
+              payload: "{\n \"arm_mode\": \n  {\n   \"mode\": \"arm_night\"\n  }\n}"
+          - choose:
+            default: !input action_armed_night
       - conditions:
           - condition: trigger
             id: panel_armed_away
