@@ -163,6 +163,16 @@ action:
               - conditions:
                   - condition: state
                     entity_id: !input control_panel
+                    state: armed_night
+                    attribute: next_state
+                sequence:
+                  - service: mqtt.publish
+                    data:
+                      topic: !input z2m_keypad_path_set
+                      payload: "{\n \"arm_mode\": \n  {\n   \"mode\": \"arm_night_zones\"\n  }\n}"
+              - conditions:
+                  - condition: state
+                    entity_id: !input control_panel
                     state: armed_away
                     attribute: next_state
                 sequence:
@@ -332,6 +342,17 @@ action:
                               topic: !input z2m_keypad_path_set
                               payload:
                                 "{\n \"arm_mode\": \n  {\n   \"mode\": \"arm_day_zones\"\n
+                                \ }\n}"
+                      - conditions:
+                          - condition: state
+                            entity_id: !input control_panel
+                            state: armed_night
+                        sequence:
+                          - service: mqtt.publish
+                            data:
+                              topic: !input z2m_keypad_path_set
+                              payload:
+                                "{\n \"arm_mode\": \n  {\n   \"mode\": \"arm_night_zones\"\n
                                 \ }\n}"
                       - conditions:
                           - condition: state
